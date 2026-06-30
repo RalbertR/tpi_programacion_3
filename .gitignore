@@ -15,6 +15,7 @@ frontend/.vite/
 # Editor / OS comunes
 .vscode/
 .DS_Store
+.playwright-mcp/
 
 # Material de referencia de entregas previas (no forma parte del TPI)
 back_legacy/

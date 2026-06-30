@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro - Food Store</title>
+</head>
+
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="login-header">
+        <h1 class="brand">Food Store</h1>
+        <p class="subtitle">Registro</p>
+      </div>
+
+      <form id="registerForm" class="login-form">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" placeholder="Ingrese su nombre completo" required />
+        </div>
+
+        <div class="form-group">
+          <label for="mail">Email</label>
+          <input type="email" id="mail" placeholder="ejemplo@correo.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contrasena</label>
+          <input type="password" id="password" placeholder="Minimo 6 caracteres" required />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmarPassword">Confirmar contrasena</label>
+          <input type="password" id="confirmarPassword" placeholder="Repita la contrasena" required />
+        </div>
+
+        <p id="errorMsg" class="form-error"></p>
+
+        <button type="submit" class="login-button">Registrarme</button>
+      </form>
+
+      <p class="register-link">
+        Ya tenes cuenta? <a href="../login/login.html">Iniciar sesion</a>
+      </p>
+    </div>
+  </div>
+
+  <script type="module" src="./register.ts"></script>
+</body>
+
+</html>
