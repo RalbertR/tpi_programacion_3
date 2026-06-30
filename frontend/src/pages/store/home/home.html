@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Store</title>
+</head>
+
+<body>
+  <header class="store-header" id="header"></header>
+
+  <div class="store-layout">
+    <aside class="sidebar">
+      <h2 class="sidebar-title">Filtros</h2>
+
+      <div class="filter-group">
+        <label for="buscador">Buscar</label>
+        <input type="text" id="buscador" placeholder="Nombre del producto..." />
+      </div>
+
+      <div class="filter-group">
+        <label for="orden">Ordenar por</label>
+        <select id="orden">
+          <option value="nombre-asc">Nombre A-Z</option>
+          <option value="nombre-desc">Nombre Z-A</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="precio-desc">Precio: mayor a menor</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Categoria</label>
+        <ul id="categoriasList" class="categorias-list"></ul>
+      </div>
+    </aside>
+
+    <main class="products-area">
+      <div id="productosContainer" class="products-grid"></div>
+    </main>
+  </div>
+
+  <script type="module" src="./home.ts"></script>
+</body>
+
+</html>
