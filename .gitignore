@@ -1,6 +1,7 @@
 # Backend (Gradle/Java)
 backend/.gradle/
 backend/build/
+backend/bin/
 backend/data/
 backend/*.class
 backend/.idea/
