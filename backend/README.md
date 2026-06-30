@@ -7,6 +7,7 @@ Backend de consola del sistema Food Store, implementado con Java, JPA/Hibernate 
 ## Instalación y ejecución
 
 ```bash
+cd backend
 ./gradlew run
 ```
 
