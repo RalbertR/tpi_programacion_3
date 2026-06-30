@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nombre": "Admin",
+    "apellido": "Food Store",
+    "mail": "admin@food.com",
+    "celular": "1122334455",
+    "password": "admin123",
+    "rol": "ADMIN"
+  },
+  {
+    "id": 2,
+    "nombre": "Cliente",
+    "apellido": "De Prueba",
+    "mail": "cliente@food.com",
+    "celular": "1166778899",
+    "password": "cliente123",
+    "rol": "USUARIO"
+  }
+]

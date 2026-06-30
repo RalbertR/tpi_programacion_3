@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Hamburguesas",
+    "descripcion": "Hamburguesas artesanales con pan casero",
+    "imagen": "https://placehold.co/300x200?text=Hamburguesas",
+    "eliminado": false
+  },
+  {
+    "id": 2,
+    "nombre": "Bebidas",
+    "descripcion": "Gaseosas, jugos y bebidas sin alcohol",
+    "imagen": "https://placehold.co/300x200?text=Bebidas",
+    "eliminado": false
+  }
+]

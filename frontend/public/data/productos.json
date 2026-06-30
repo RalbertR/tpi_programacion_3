@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "nombre": "Hamburguesa Clasica",
+    "precio": 4500,
+    "descripcion": "Carne, lechuga, tomate, cheddar y salsa especial",
+    "stock": 25,
+    "imagen": "https://placehold.co/400x300?text=Hamburguesa+Clasica",
+    "disponible": true,
+    "eliminado": false,
+    "categoriaId": 1
+  },
+  {
+    "id": 2,
+    "nombre": "Hamburguesa Doble Bacon",
+    "precio": 5800,
+    "descripcion": "Doble carne, panceta crocante y cheddar",
+    "stock": 15,
+    "imagen": "https://placehold.co/400x300?text=Doble+Bacon",
+    "disponible": true,
+    "eliminado": false,
+    "categoriaId": 1
+  },
+  {
+    "id": 3,
+    "nombre": "Hamburguesa Veggie",
+    "precio": 4200,
+    "descripcion": "Medallon de vegetales, rucula y mayonesa de ajo",
+    "stock": 10,
+    "imagen": "https://placehold.co/400x300?text=Veggie",
+    "disponible": true,
+    "eliminado": false,
+    "categoriaId": 1
+  },
+  {
+    "id": 4,
+    "nombre": "Gaseosa Cola 500ml",
+    "precio": 1200,
+    "descripcion": "Botella de 500ml bien fria",
+    "stock": 50,
+    "imagen": "https://placehold.co/400x300?text=Gaseosa+Cola",
+    "disponible": true,
+    "eliminado": false,
+    "categoriaId": 2
+  },
+  {
+    "id": 5,
+    "nombre": "Agua Saborizada 500ml",
+    "precio": 1000,
+    "descripcion": "Sabor pomelo, sin gas",
+    "stock": 30,
+    "imagen": "https://placehold.co/400x300?text=Agua+Saborizada",
+    "disponible": true,
+    "eliminado": false,
+    "categoriaId": 2
+  }
+]

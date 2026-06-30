@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "fecha": "2026-06-20",
+    "estado": "TERMINADO",
+    "total": 10300,
+    "formaPago": "TARJETA",
+    "idUsuario": 2,
+    "detalles": [
+      { "idProducto": 1, "cantidad": 1, "subtotal": 4500 },
+      { "idProducto": 2, "cantidad": 1, "subtotal": 5800 }
+    ]
+  },
+  {
+    "id": 2,
+    "fecha": "2026-06-27",
+    "estado": "PENDIENTE",
+    "total": 2200,
+    "formaPago": "EFECTIVO",
+    "idUsuario": 2,
+    "detalles": [
+      { "idProducto": 4, "cantidad": 1, "subtotal": 1200 },
+      { "idProducto": 5, "cantidad": 1, "subtotal": 1000 }
+    ]
+  }
+]
