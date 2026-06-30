@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Pedidos - Food Store</title>
+</head>
+
+<body>
+  <header class="store-header" id="header"></header>
+
+  <main class="pedidos-list">
+    <h2>Mis Pedidos</h2>
+    <div id="pedidosContainer"></div>
+  </main>
+
+  <div id="modalOverlay" class="modal-overlay oculto">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitulo"></h3>
+        <button id="modalClose" class="modal-close" type="button">&times;</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./orders.ts"></script>
+</body>
+
+</html>
