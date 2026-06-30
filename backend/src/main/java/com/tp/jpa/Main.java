@@ -1,6 +1,7 @@
 package com.tp.jpa;
 
 import com.tp.jpa.model.Categoria;
+import com.tp.jpa.model.Producto;
 import com.tp.jpa.repository.CategoriaRepository;
 import com.tp.jpa.repository.PedidoRepository;
 import com.tp.jpa.repository.ProductoRepository;
@@ -145,7 +146,166 @@ public class Main {
     // ─────────────────────── MENU PRODUCTOS ────────────────────────
 
     private static void menuProductos() {
-        System.out.println("[Productos] -> TODO: implementar");
+        int opcion;
+        do {
+            System.out.println("\n---------- Productos ----------");
+            System.out.println("1. Alta");
+            System.out.println("2. Modificar");
+            System.out.println("3. Baja logica");
+            System.out.println("4. Listado");
+            System.out.println("0. Volver");
+            opcion = leerEntero("Seleccione una opcion: ");
+            switch (opcion) {
+                case 1 -> altaProducto();
+                case 2 -> modificarProducto();
+                case 3 -> bajaProducto();
+                case 4 -> listarProductos();
+                case 0 -> System.out.println("Volviendo al menu principal...");
+                default -> System.out.println("Opcion invalida.");
+            }
+        } while (opcion != 0);
+    }
+
+    private static void altaProducto() {
+        System.out.println("\n-- Alta de Producto --");
+
+        List<Categoria> categorias = categoriaRepo.listarActivos();
+        if (categorias.isEmpty()) {
+            System.out.println("No hay categorias activas. Cree una categoria primero.");
+            return;
+        }
+        listarCategorias();
+        Long catId = leerLong("ID de la categoria: ");
+
+        Optional<Categoria> catResultado = categoriaRepo.buscarPorId(catId);
+        if (catResultado.isEmpty() || catResultado.get().isEliminado()) {
+            System.out.println("Error: categoria no valida.");
+            return;
+        }
+        Categoria categoria = catResultado.get();
+
+        String nombre = leerTextoObligatorio("Nombre del producto: ");
+        System.out.print("Descripcion (opcional): ");
+        String descripcion = sc.nextLine().trim();
+        double precio = leerDoublePositivo("Precio: ");
+        int stock = leerEnteroNoNegativo("Stock: ");
+        System.out.print("Imagen (URL, opcional): ");
+        String imagen = sc.nextLine().trim();
+        boolean disponible = leerConfirmacion("Disponible (S/n, default S): ", true);
+
+        Producto nuevo = Producto.builder()
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .precio(precio)
+                .stock(stock)
+                .imagen(imagen)
+                .disponible(disponible)
+                .build();
+
+        Producto guardado = categoriaRepo.agregarProducto(categoria.getId(), nuevo);
+        System.out.println("Producto guardado con ID: " + guardado.getId()
+                + " en la categoria '" + categoria.getNombre() + "'.");
+    }
+
+    private static void modificarProducto() {
+        System.out.println("\n-- Modificacion de Producto --");
+        listarProductos();
+        Long id = leerLong("ID del producto a modificar: ");
+
+        Optional<Producto> resultado = productoRepo.buscarPorId(id);
+        if (resultado.isEmpty() || resultado.get().isEliminado()) {
+            System.out.println("Error: no existe un producto activo con ID " + id + ".");
+            return;
+        }
+
+        Producto producto = resultado.get();
+        System.out.println("Valores actuales:");
+        System.out.println("  Nombre:      " + producto.getNombre());
+        System.out.println("  Precio:      $" + producto.getPrecio());
+        System.out.println("  Stock:       " + producto.getStock());
+        System.out.println("  Descripcion: " + producto.getDescripcion());
+        System.out.println("(Deje en blanco para conservar el valor actual)");
+
+        System.out.print("Nuevo nombre [" + producto.getNombre() + "]: ");
+        String nombre = sc.nextLine().trim();
+        if (!nombre.isEmpty()) {
+            producto.setNombre(nombre);
+        }
+
+        System.out.print("Nuevo precio [" + producto.getPrecio() + "]: ");
+        String precioStr = sc.nextLine().trim();
+        if (!precioStr.isEmpty()) {
+            try {
+                double precio = Double.parseDouble(precioStr.replace(",", "."));
+                if (precio > 0) {
+                    producto.setPrecio(precio);
+                } else {
+                    System.out.println("Precio invalido: debe ser mayor a 0. Se conserva el valor actual.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Precio invalido. Se conserva el valor actual.");
+            }
+        }
+
+        System.out.print("Nuevo stock [" + producto.getStock() + "]: ");
+        String stockStr = sc.nextLine().trim();
+        if (!stockStr.isEmpty()) {
+            try {
+                int stock = Integer.parseInt(stockStr);
+                if (stock >= 0) {
+                    producto.setStock(stock);
+                } else {
+                    System.out.println("Stock invalido: debe ser >= 0. Se conserva el valor actual.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Stock invalido. Se conserva el valor actual.");
+            }
+        }
+
+        productoRepo.guardar(producto);
+        System.out.println("Producto actualizado correctamente.");
+    }
+
+    private static void bajaProducto() {
+        System.out.println("\n-- Baja logica de Producto --");
+        listarProductos();
+        Long id = leerLong("ID del producto a eliminar: ");
+
+        Optional<Producto> resultado = productoRepo.buscarPorId(id);
+        if (resultado.isEmpty() || resultado.get().isEliminado()) {
+            System.out.println("Error: no existe un producto activo con ID " + id + ".");
+            return;
+        }
+        String nombre = resultado.get().getNombre();
+
+        productoRepo.eliminarLogico(id);
+        System.out.println("Producto '" + nombre + "' dado de baja correctamente.");
+    }
+
+    private static void listarProductos() {
+        List<Categoria> categorias = categoriaRepo.listarActivos();
+        if (categorias.isEmpty()) {
+            System.out.println("No hay categorias activas.");
+            return;
+        }
+        boolean hayProductos = false;
+        for (Categoria categoria : categorias) {
+            List<Producto> productos = categoriaRepo.buscarProductosPorCategoria(categoria.getId());
+            if (productos.isEmpty()) {
+                continue;
+            }
+            hayProductos = true;
+            System.out.println("\n== " + categoria.getNombre() + " ==");
+            System.out.println("  ID | Nombre               |    Precio | Stock | Disponible");
+            System.out.println("  ---|----------------------|-----------|-------|-----------");
+            for (Producto p : productos) {
+                System.out.printf("  %-3d| %-20s | %9.2f | %5d | %s%n",
+                        p.getId(), p.getNombre(), p.getPrecio(), p.getStock(), p.getDisponible());
+            }
+        }
+        if (!hayProductos) {
+            System.out.println("No hay productos activos.");
+        }
     }
 
     // ─────────────────────── MENU USUARIOS ─────────────────────────
@@ -200,6 +360,45 @@ public class Main {
                 return texto;
             }
             System.out.println("El campo no puede estar vacio.");
+        }
+    }
+
+    private static double leerDoublePositivo(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String linea = sc.nextLine().trim();
+            try {
+                double valor = Double.parseDouble(linea.replace(",", "."));
+                if (valor > 0) return valor;
+                System.out.println("El valor debe ser mayor a 0.");
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor ingrese un numero valido.");
+            }
+        }
+    }
+
+    private static int leerEnteroNoNegativo(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String linea = sc.nextLine().trim();
+            try {
+                int valor = Integer.parseInt(linea);
+                if (valor >= 0) return valor;
+                System.out.println("El valor no puede ser negativo.");
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor ingrese un numero entero valido.");
+            }
+        }
+    }
+
+    private static boolean leerConfirmacion(String mensaje, boolean valorPorDefecto) {
+        while (true) {
+            System.out.print(mensaje);
+            String linea = sc.nextLine().trim();
+            if (linea.isEmpty()) return valorPorDefecto;
+            if (linea.equalsIgnoreCase("S")) return true;
+            if (linea.equalsIgnoreCase("N")) return false;
+            System.out.println("Por favor ingrese S o N.");
         }
     }
 }

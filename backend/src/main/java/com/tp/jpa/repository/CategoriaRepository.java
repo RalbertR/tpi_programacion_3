@@ -3,6 +3,7 @@ package com.tp.jpa.repository;
 import com.tp.jpa.model.Categoria;
 import com.tp.jpa.model.Producto;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -32,6 +33,32 @@ public class CategoriaRepository extends BaseRepository<Categoria> {
             TypedQuery<Producto> query = em.createQuery(jpql, Producto.class);
             query.setParameter("catId", categoriaId);
             return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Asocia un producto nuevo a la categoría indicada. Como la relación es
+     * unidireccional y Categoria es la dueña de la colección, la categoría
+     * debe estar gestionada (recuperada con em.find) dentro de la misma
+     * sesión en la que se modifica la colección, para evitar
+     * LazyInitializationException sobre un Set inicializado perezosamente.
+     */
+    public Producto agregarProducto(Long categoriaId, Producto producto) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            Categoria categoria = em.find(Categoria.class, categoriaId);
+            categoria.addProducto(producto);
+            tx.commit();
+            return producto;
+        } catch (RuntimeException e) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            throw e;
         } finally {
             em.close();
         }
