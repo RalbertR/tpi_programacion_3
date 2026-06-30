@@ -733,7 +733,64 @@ public class Main {
     // ─────────────────────── MENU REPORTES ─────────────────────────
 
     private static void menuReportes() {
-        System.out.println("[Reportes] -> TODO: implementar");
+        int opcion;
+        do {
+            System.out.println("\n---------- Reportes ----------");
+            System.out.println("1. Productos por categoria");
+            System.out.println("2. Pedidos por usuario");
+            System.out.println("3. Pedidos por estado");
+            System.out.println("4. Total facturado");
+            System.out.println("0. Volver");
+            opcion = leerEntero("Seleccione una opcion: ");
+            switch (opcion) {
+                case 1 -> productosPorCategoria();
+                case 2 -> pedidosPorUsuario();
+                case 3 -> pedidosPorEstado();
+                case 4 -> totalFacturado();
+                case 0 -> System.out.println("Volviendo al menu principal...");
+                default -> System.out.println("Opcion invalida.");
+            }
+        } while (opcion != 0);
+    }
+
+    private static void productosPorCategoria() {
+        System.out.println("\n-- Productos por Categoria --");
+        List<Categoria> categorias = categoriaRepo.listarActivos();
+        if (categorias.isEmpty()) {
+            System.out.println("No hay categorias activas.");
+            return;
+        }
+        listarCategorias();
+        Long catId = leerLong("ID de la categoria: ");
+
+        Optional<Categoria> catResultado = categoriaRepo.buscarPorId(catId);
+        if (catResultado.isEmpty() || catResultado.get().isEliminado()) {
+            System.out.println("Error: categoria no valida.");
+            return;
+        }
+
+        List<Producto> productos = categoriaRepo.buscarProductosPorCategoria(catId);
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos activos en la categoria '"
+                    + catResultado.get().getNombre() + "'.");
+            return;
+        }
+
+        System.out.println("\nProductos en categoria '" + catResultado.get().getNombre() + "':");
+        System.out.println("  ID | Nombre               |    Precio | Stock");
+        System.out.println("  ---|----------------------|-----------|------");
+        for (Producto p : productos) {
+            System.out.printf("  %-3d| %-20s | %9.2f | %d%n",
+                    p.getId(), p.getNombre(), p.getPrecio(), p.getStock());
+        }
+    }
+
+    private static void totalFacturado() {
+        System.out.println("\n-- Total Facturado --");
+        List<Pedido> terminados = pedidoRepo.buscarPorEstado(EstadoPedido.TERMINADO);
+        double total = terminados.stream().mapToDouble(p -> p.getTotal() != null ? p.getTotal() : 0.0).sum();
+        System.out.println("Pedidos terminados: " + terminados.size());
+        System.out.println("Total facturado: " + formatearMoneda(total));
     }
 
     // ─────────────────────── UTILIDADES ────────────────────────────
