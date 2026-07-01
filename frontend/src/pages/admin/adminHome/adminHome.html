@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administracion - Food Store</title>
+</head>
+
+<body>
+  <header class="store-header" id="header"></header>
+
+  <div class="admin-layout">
+    <nav class="admin-sidebar" id="adminSidebar"></nav>
+
+    <div class="admin-content">
+      <div class="admin-content-header">
+        <h2>Panel de Administracion</h2>
+      </div>
+
+      <div id="statsContainer" class="stat-cards"></div>
+
+      <div class="admin-section">
+        <h3>Resumen Rapido</h3>
+        <div id="resumenContainer">Cargando estadisticas...</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./adminHome.ts"></script>
+</body>
+
+</html>

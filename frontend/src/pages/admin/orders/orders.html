@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedidos - Panel Admin</title>
+</head>
+
+<body>
+  <header class="store-header" id="header"></header>
+
+  <div class="admin-layout">
+    <nav class="admin-sidebar" id="adminSidebar"></nav>
+
+    <div class="admin-content">
+      <div class="admin-content-header">
+        <h2>Gestion de Pedidos</h2>
+        <select id="filtroEstado">
+          <option value="">Todos los pedidos</option>
+          <option value="PENDIENTE">Pendiente</option>
+          <option value="CONFIRMADO">Confirmado</option>
+          <option value="TERMINADO">Terminado</option>
+          <option value="CANCELADO">Cancelado</option>
+        </select>
+      </div>
+
+      <div id="pedidosContainer"></div>
+    </div>
+  </div>
+
+  <div id="modalOverlay" class="modal-overlay oculto">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitulo"></h3>
+        <button id="modalClose" class="modal-close" type="button">&times;</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./orders.ts"></script>
+</body>
+
+</html>

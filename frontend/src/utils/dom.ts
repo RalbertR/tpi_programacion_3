@@ -1,6 +1,15 @@
 import { getSesion, logout } from "./auth";
 import { getCarrito, cantidadItemsCarrito } from "./cart";
-import { RUTA_LOGIN, RUTA_HOME, RUTA_CART, RUTA_CLIENT_ORDERS, RUTA_ADMIN_HOME } from "../config";
+import {
+  RUTA_LOGIN,
+  RUTA_HOME,
+  RUTA_CART,
+  RUTA_CLIENT_ORDERS,
+  RUTA_ADMIN_HOME,
+  RUTA_ADMIN_CATEGORIES,
+  RUTA_ADMIN_PRODUCTS,
+  RUTA_ADMIN_ORDERS,
+} from "../config";
 
 export function renderHeader(contenedor: HTMLElement): void {
   const sesion = getSesion();
@@ -45,4 +54,19 @@ export function mostrarVacio(contenedor: HTMLElement, mensaje: string): void {
 
 export function badgeEstado(estado: string): string {
   return `<span class="badge badge-${estado.toLowerCase()}">${estado}</span>`;
+}
+
+export function renderAdminSidebar(contenedor: HTMLElement, activo: string): void {
+  const items: Array<[string, string, string]> = [
+    ["dashboard", RUTA_ADMIN_HOME, "Dashboard"],
+    ["categories", RUTA_ADMIN_CATEGORIES, "Categorias"],
+    ["products", RUTA_ADMIN_PRODUCTS, "Productos"],
+    ["orders", RUTA_ADMIN_ORDERS, "Pedidos"],
+  ];
+
+  contenedor.innerHTML = items
+    .map(([clave, ruta, label]) => `<a href="${ruta}" class="${clave === activo ? "activo" : ""}">${label}</a>`)
+    .join("");
+
+  contenedor.innerHTML += `<a href="${RUTA_HOME}">Ver Tienda</a>`;
 }

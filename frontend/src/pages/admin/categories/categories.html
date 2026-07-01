@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categorias - Panel Admin</title>
+</head>
+
+<body>
+  <header class="store-header" id="header"></header>
+
+  <div class="admin-layout">
+    <nav class="admin-sidebar" id="adminSidebar"></nav>
+
+    <div class="admin-content">
+      <div class="admin-content-header">
+        <h2>Gestion de Categorias</h2>
+        <button id="btnNueva" type="button">+ Nueva Categoria</button>
+      </div>
+
+      <div class="admin-section">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalOverlay" class="modal-overlay oculto">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalTitulo"></h3>
+        <button id="modalClose" class="modal-close" type="button">&times;</button>
+      </div>
+      <form id="categoriaForm" class="login-form">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" required />
+        </div>
+        <div class="form-group">
+          <label for="descripcion">Descripcion</label>
+          <input type="text" id="descripcion" required />
+        </div>
+        <div class="form-group">
+          <label for="imagen">URL de Imagen</label>
+          <input type="text" id="imagen" placeholder="https://ejemplo.com/imagen.jpg" required />
+        </div>
+        <p id="formError" class="form-error"></p>
+        <button type="submit" class="login-button">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./categories.ts"></script>
+</body>
+
+</html>
